@@ -1,8 +1,6 @@
 import * as React from 'react';
 import * as ContactInfoClass from './ContactInfo';
-export default class ContactDetails extends React.Component<{ 
-    isSelected: boolean, 
-    contactInfo: ContactInfoClass.ContactInfoProp}> {
+export default class ContactDetails extends React.Component<{ isSelected: boolean, contactInfo: ContactInfoClass.ContactInfoProp}> {
     constructor(props: { isSelected: boolean, contactInfo: ContactInfoClass.ContactInfoProp}) {
         
         super(props);

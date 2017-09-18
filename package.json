@@ -16,5 +16,9 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/react-addons-update": "^0.14.18",
+    "react-addons-update": "^15.6.0"
   }
 }

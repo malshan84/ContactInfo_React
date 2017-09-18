@@ -41,6 +41,10 @@ class Contact extends React.Component<{}, ContactState> {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+
+        this.handleCreate = this.handleCreate.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -56,6 +60,37 @@ class Contact extends React.Component<{}, ContactState> {
             selectedKey: key
         });
         console.log(key); 
+    }
+
+    handleCreate(contact: ContactInfoClass.ContactInfoProp) {
+        this.setState({
+            contactData: React.__Addons.update(this.state.contactData, {$push: [contact]})
+        });
+    }
+
+    handleRemove() {
+        this.setState({
+            contactData: React.__Addons.update(
+                this.state.contactData,
+                {
+                    $splice: [[this.state.selectedKey, 1]] 
+                }
+            ),  selectedKey: -1
+        });
+    }
+
+    handleEdit(name: string, phone: string) {
+        this.setState({
+            contactData: React.__Addons.update(
+                this.state.contactData,
+                {
+                    [this.state.selectedKey]: {
+                        name: {$set: name},
+                        phone: {$set: phone}
+                    }
+                }
+            )
+        });
     }
 
     render() {
