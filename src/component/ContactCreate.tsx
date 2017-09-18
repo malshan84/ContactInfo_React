@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ContactInfoClass from './ContactInfo';
 
 interface ContactCreateProps {
-    onCreate(contactData: ContactInfoClass.ContactInfoData): void;
+    onCreate(contactData: ContactInfoClass.ContactInfoProp): void;
 }
 
 export default class ContactCreate extends React.Component<ContactCreateProps, {name: string, phone: string}> {
@@ -23,9 +23,11 @@ export default class ContactCreate extends React.Component<ContactCreateProps, {
     }
 
     handleOnclick() {
-        const contact: ContactInfoClass.ContactInfoData = {
-            name: this.state.name,
-            phone: this.state.phone
+        const contact: ContactInfoClass.ContactInfoProp = {
+            data: {
+                name: this.state.name,
+                phone: this.state.phone
+            }
         };
 
         this.props.onCreate(contact);

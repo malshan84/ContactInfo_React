@@ -18,7 +18,7 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/react-addons-update": "^0.14.18",
-    "react-addons-update": "^15.6.0"
+    "@types/immutability-helper": "^2.0.15",
+    "immutability-helper": "^2.4.0"
   }
 }

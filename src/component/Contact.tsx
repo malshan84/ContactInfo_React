@@ -3,7 +3,7 @@ import * as ContactInfoClass from './ContactInfo';
 import ContactInfo from './ContactInfo';
 import ContactDetails from './ContactDetails';
 import ContactCreate from './ContactCreate';
-import {__Addons} from 'react';
+import * as update from 'immutability-helper';
 
 interface ContactState {
     selectedKey: number;
@@ -47,8 +47,6 @@ class Contact extends React.Component<{}, ContactState> {
         this.handleCreate = this.handleCreate.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
-
-        this.handleCreate(this.state.contactData[0].data);
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -65,16 +63,18 @@ class Contact extends React.Component<{}, ContactState> {
         });
         console.log(key); 
     }
-
-    handleCreate(contact: ContactInfoClass.ContactInfoData): void {
+    
+    handleCreate(contact: ContactInfoClass.ContactInfoProp): void {
+        
         this.setState({
-            contactData: __Addons.update(this.state.contactData, {$push: [contact]})            
+            contactData: update(this.state.contactData, {$push: [contact]})
         });
+
     }
 
     handleRemove() {
         this.setState({
-            contactData: __Addons.update(
+            contactData: update(
                 this.state.contactData,
                 {
                     $splice: [[this.state.selectedKey, 1]] 
@@ -85,7 +85,7 @@ class Contact extends React.Component<{}, ContactState> {
 
     handleEdit(name: string, phone: string) {
         this.setState({
-            contactData: __Addons.update(
+            contactData: update(
                 this.state.contactData,
                 {
                     [this.state.selectedKey]: {
