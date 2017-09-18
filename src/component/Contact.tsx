@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ContactInfoClass from './ContactInfo';
 import ContactInfo from './ContactInfo';
 import ContactDetails from './ContactDetails';
+import ContactCreate from './ContactCreate';
+import {__Addons} from 'react';
 
 interface ContactState {
     selectedKey: number;
@@ -45,6 +47,8 @@ class Contact extends React.Component<{}, ContactState> {
         this.handleCreate = this.handleCreate.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+
+        this.handleCreate(this.state.contactData[0].data);
     }
 
     handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -62,15 +66,15 @@ class Contact extends React.Component<{}, ContactState> {
         console.log(key); 
     }
 
-    handleCreate(contact: ContactInfoClass.ContactInfoProp) {
+    handleCreate(contact: ContactInfoClass.ContactInfoData): void {
         this.setState({
-            contactData: React.__Addons.update(this.state.contactData, {$push: [contact]})
+            contactData: __Addons.update(this.state.contactData, {$push: [contact]})            
         });
     }
 
     handleRemove() {
         this.setState({
-            contactData: React.__Addons.update(
+            contactData: __Addons.update(
                 this.state.contactData,
                 {
                     $splice: [[this.state.selectedKey, 1]] 
@@ -81,7 +85,7 @@ class Contact extends React.Component<{}, ContactState> {
 
     handleEdit(name: string, phone: string) {
         this.setState({
-            contactData: React.__Addons.update(
+            contactData: __Addons.update(
                 this.state.contactData,
                 {
                     [this.state.selectedKey]: {
@@ -126,7 +130,7 @@ class Contact extends React.Component<{}, ContactState> {
         };
 
         return (
-            <div>
+            <div>                
                 <h1>Contacts</h1>
                 <input 
                     name="Keyword"
@@ -139,6 +143,7 @@ class Contact extends React.Component<{}, ContactState> {
                     isSelected={this.state.selectedKey !== -1}
                     contactInfo={getContactData(this.state.selectedKey)}           
                 />
+                <ContactCreate onCreate={this.handleCreate}/>
             </div>
             );
         }
