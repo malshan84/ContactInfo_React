@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ContactInfoClass from './ContactInfo';
 import ContactInfo from './ContactInfo';
+import ContactDetails from './ContactDetails';
 
 interface ContactState {
     selectedKey: number;
@@ -50,7 +51,10 @@ class Contact extends React.Component<{}, ContactState> {
         });
     }
 
-    handleClick(key: React.MouseEvent<HTMLDivElement>) {
+    handleClick(key: number) {
+        this.setState({
+            selectedKey: key
+        });
         console.log(key); 
     }
 
@@ -66,10 +70,24 @@ class Contact extends React.Component<{}, ContactState> {
                 <ContactInfo 
                     data={contactData.data}
                     key={i}
-                    onClick={(key: React.MouseEvent<HTMLDivElement>) => this.handleClick(key)}
+                    onClick={() => this.handleClick(i)}
                 />)
                 ;
             });
+        };
+        const getContactData = (selectedKey: number): ContactInfoClass.ContactInfoProp => {
+            if (selectedKey === -1) {
+                return(
+                    {
+                        data: {
+                            name: '',
+                            phone: ''
+                        }
+                    }
+                );
+            }else {
+                return this.state.contactData[selectedKey];
+            }
         };
 
         return (
@@ -81,8 +99,12 @@ class Contact extends React.Component<{}, ContactState> {
                     value={this.state.keyword}
                     onChange={this.handleChange}
                 />
-                <div>{mapToComponents(this.state.contactData)}</div>       
-                </div>
+                <div>{mapToComponents(this.state.contactData)}</div>
+                <ContactDetails 
+                    isSelected={this.state.selectedKey !== -1}
+                    contactInfo={getContactData(this.state.selectedKey)}           
+                />
+            </div>
             );
         }
 }
