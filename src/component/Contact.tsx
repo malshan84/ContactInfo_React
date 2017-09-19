@@ -73,6 +73,9 @@ class Contact extends React.Component<{}, ContactState> {
     }
 
     handleRemove() {
+        if (this.state.selectedKey < 0) {
+            return;
+        }
         this.setState({
             contactData: update(
                 this.state.contactData,
@@ -89,8 +92,10 @@ class Contact extends React.Component<{}, ContactState> {
                 this.state.contactData,
                 {
                     [this.state.selectedKey]: {
-                        name: {$set: name},
-                        phone: {$set: phone}
+                        data:{
+                            name: {$set: name},
+                            phone: {$set: phone}
+                        }
                     }
                 }
             )
@@ -141,7 +146,9 @@ class Contact extends React.Component<{}, ContactState> {
                 <div>{mapToComponents(this.state.contactData)}</div>
                 <ContactDetails 
                     isSelected={this.state.selectedKey !== -1}
-                    contactInfo={getContactData(this.state.selectedKey)}           
+                    contactInfo={getContactData(this.state.selectedKey)}
+                    onRemove={this.handleRemove}
+                    onEdit={this.handleEdit}
                 />
                 <ContactCreate onCreate={this.handleCreate}/>
             </div>
